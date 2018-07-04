@@ -34,7 +34,7 @@ public class CategoryServiceTest {
     public void setUp(){
 
         MockitoAnnotations.initMocks(this);
-        categoryService = new CategoryServiceImpl(CategoryMapper.INSTANCE,categoryRepository);
+        categoryService = new CategoryServiceImpl(categoryRepository, CategoryMapper.INSTANCE);
     }
 
     @Test

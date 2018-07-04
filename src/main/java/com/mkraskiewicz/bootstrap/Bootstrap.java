@@ -1,7 +1,9 @@
 package com.mkraskiewicz.bootstrap;
 
 import com.mkraskiewicz.domain.Category;
+import com.mkraskiewicz.domain.Customer;
 import com.mkraskiewicz.repositories.CategoryRepository;
+import com.mkraskiewicz.repositories.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,14 +16,22 @@ import org.springframework.stereotype.Component;
 public class Bootstrap implements CommandLineRunner {
 
     private CategoryRepository categoryRepository;
+    private CustomerRepository customerRepository;
 
-    public Bootstrap(CategoryRepository categoryRepository) {
+    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
         this.categoryRepository = categoryRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
+        loadCustomers();
+        loadCategories();
+
+    }
+
+    private void loadCategories() {
         Category fruits = new Category();
         fruits.setName("Fruits");
 
@@ -43,6 +53,26 @@ public class Bootstrap implements CommandLineRunner {
         categoryRepository.save(exotic);
         categoryRepository.save(nuts);
 
-        log.info("Data loaded = " + categoryRepository.count());
+        log.info("Category Data loaded = " + categoryRepository.count());
+    }
+
+    private void loadCustomers(){
+        Customer maciej = new Customer();
+        maciej.setFirstName("Maciej");
+        maciej.setLastName("Kraskiewicz");
+
+        Customer random = new Customer();
+        random.setFirstName("Bob");
+        random.setLastName("Random");
+
+        Customer anotherRandom = new Customer();
+        anotherRandom.setFirstName("John");
+        anotherRandom.setLastName("Snow");
+
+        customerRepository.save(maciej);
+        customerRepository.save(random);
+        customerRepository.save(anotherRandom);
+
+        log.info("Customer Data loaded = " + customerRepository.count());
     }
 }
