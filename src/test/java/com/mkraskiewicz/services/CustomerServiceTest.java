@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -69,6 +70,54 @@ public class CustomerServiceTest {
         //then
         assertEquals(FIRST_NAME, customerDTO.getFirstName());
         assertEquals(LAST_NAME, customerDTO.getLastName());
+    }
 
+    @Test
+    public void saveCustomerTest(){
+
+        //given
+        Customer customer = new Customer();
+        customer.setFirstName(FIRST_NAME);
+        customer.setLastName(LAST_NAME);
+        customer.setId(Long.valueOf(1));
+
+        CustomerDTO givenDTO = new CustomerDTO();
+        givenDTO.setLastName(customer.getLastName());
+        givenDTO.setFirstName(customer.getFirstName());
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+
+        //when
+        CustomerDTO returnedDTO = customerService.crateNewCustomer(givenDTO);
+
+        //then
+        assertEquals(FIRST_NAME, returnedDTO.getFirstName());
+        assertEquals(LAST_NAME, returnedDTO.getLastName());
+        assertEquals("/api/v1/customers/1", returnedDTO.getCustomerUrl());
+    }
+
+    @Test
+    public void saveCustomerByDTO(){
+
+        //given
+        Customer customer = new Customer();
+        customer.setFirstName(FIRST_NAME);
+        customer.setLastName(LAST_NAME);
+        customer.setId(Long.valueOf(1));
+
+        CustomerDTO givenDTO = new CustomerDTO();
+        givenDTO.setLastName(customer.getLastName());
+        givenDTO.setFirstName(customer.getFirstName());
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+
+
+        //when
+        CustomerDTO returnedDTO = customerService.saveCustomerByDTO(Long.valueOf(1),givenDTO);
+
+        //then
+        assertEquals(FIRST_NAME, returnedDTO.getFirstName());
+        assertEquals(LAST_NAME, returnedDTO.getLastName());
+        assertEquals("/api/v1/customers/1", returnedDTO.getCustomerUrl());
     }
 }
