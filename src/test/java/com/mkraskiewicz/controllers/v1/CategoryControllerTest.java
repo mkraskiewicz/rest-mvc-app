@@ -1,6 +1,7 @@
 package com.mkraskiewicz.controllers.v1;
 
 import com.mkraskiewicz.api.v1.model.CategoryDTO;
+import com.mkraskiewicz.exceptions.ResourceNotFoundException;
 import com.mkraskiewicz.services.CategoryService;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +44,8 @@ public class CategoryControllerTest {
     public void setUp(){
 
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(categoryController)
+                .setControllerAdvice(new RestResponseEntityExceptionHandler()).build();
     }
 
     @Test
@@ -60,7 +62,7 @@ public class CategoryControllerTest {
         List<CategoryDTO> categoryDTOList = Arrays.asList(categoryDTO,categoryDTO1);
         when(categoryService.getAllCategories()).thenReturn(categoryDTOList);
 
-        mockMvc.perform(get("/api/v1/categories/")
+        mockMvc.perform(get(CategoryController.BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.categories",hasSize(2)));
@@ -75,10 +77,19 @@ public class CategoryControllerTest {
 
         when(categoryService.getCategoryByName(anyString())).thenReturn(categoryDTO);
 
-        mockMvc.perform(get("/api/v1/categories/Maciek/")
+        mockMvc.perform(get(CategoryController.BASE_URL + "/Maciek/")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.name",equalTo(NAME)));
     }
 
+    @Test
+    public void getNameNotFound() throws  Exception {
+
+        when(categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(CategoryController.BASE_URL + "/Foo")
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }

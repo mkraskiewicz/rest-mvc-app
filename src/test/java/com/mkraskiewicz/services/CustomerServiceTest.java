@@ -2,6 +2,7 @@ package com.mkraskiewicz.services;
 
 import com.mkraskiewicz.api.v1.mapper.CustomerMapper;
 import com.mkraskiewicz.api.v1.model.CustomerDTO;
+import com.mkraskiewicz.controllers.v1.CustomerController;
 import com.mkraskiewicz.domain.Customer;
 import com.mkraskiewicz.repositories.CustomerRepository;
 import com.mkraskiewicz.services.impl.CustomerServiceImpl;
@@ -17,6 +18,8 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -93,7 +96,7 @@ public class CustomerServiceTest {
         //then
         assertEquals(FIRST_NAME, returnedDTO.getFirstName());
         assertEquals(LAST_NAME, returnedDTO.getLastName());
-        assertEquals("/api/v1/customers/1", returnedDTO.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL +  "/1", returnedDTO.getCustomerUrl());
     }
 
     @Test
@@ -118,6 +121,16 @@ public class CustomerServiceTest {
         //then
         assertEquals(FIRST_NAME, returnedDTO.getFirstName());
         assertEquals(LAST_NAME, returnedDTO.getLastName());
-        assertEquals("/api/v1/customers/1", returnedDTO.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL +  "/1", returnedDTO.getCustomerUrl());
+    }
+
+    @Test
+    public void deleteCustomerByIdTest() throws Exception {
+
+        Long id = Long.valueOf(1);
+
+        customerRepository.deleteById(id);
+
+        verify(customerRepository, timeout(1)).deleteById(anyLong());
     }
 }
