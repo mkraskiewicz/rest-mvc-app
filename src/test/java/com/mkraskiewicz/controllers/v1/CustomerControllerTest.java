@@ -3,7 +3,6 @@ package com.mkraskiewicz.controllers.v1;
 import com.mkraskiewicz.api.v1.model.CustomerDTO;
 import com.mkraskiewicz.exceptions.ResourceNotFoundException;
 import com.mkraskiewicz.services.CustomerService;
-import org.json.JSONString;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -18,15 +17,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.mkraskiewicz.controllers.v1.AbstractRestControllerTest.asJsonString;
-import static com.sun.javaws.JnlpxArgs.verify;
-import static org.assertj.core.api.Assertions.not;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -50,7 +45,7 @@ public class CustomerControllerTest {
     MockMvc mockMvc;
 
     @Before
-    public void setUp(){
+    public void setUp() {
 
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(customerController)
@@ -58,24 +53,24 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void ListCustomersTest() throws Exception{
+    public void ListCustomersTest() throws Exception {
 
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(FIRST_NAME);
 
         CustomerDTO customerDTO1 = new CustomerDTO();
         customerDTO1.setFirstName(LAST_NAME);
-        List<CustomerDTO> customerDTOList = Arrays.asList(customerDTO,customerDTO1);
+        List<CustomerDTO> customerDTOList = Arrays.asList(customerDTO, customerDTO1);
         when(customerService.getAllCustomers()).thenReturn(customerDTOList);
 
         mockMvc.perform(get(CustomerController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customers",hasSize(2)));
+                .andExpect(jsonPath("$.customers", hasSize(2)));
     }
 
     @Test
-    public void getCategoryByNameTest() throws Exception{
+    public void getCategoryByNameTest() throws Exception {
 
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName(FIRST_NAME);
@@ -86,11 +81,11 @@ public class CustomerControllerTest {
         mockMvc.perform(get(CustomerController.BASE_URL + "/1/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName",equalTo(FIRST_NAME)));
+                .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)));
     }
 
     @Test
-    public void createNewCustomerTest() throws Exception{
+    public void createNewCustomerTest() throws Exception {
 
         //given
         CustomerDTO customerDTO = new CustomerDTO();
@@ -107,15 +102,15 @@ public class CustomerControllerTest {
 
         //when/then
         mockMvc.perform(post("/api/v1/customers/")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(asJsonString(customerDTO)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(customerDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)))
-                .andExpect(jsonPath("$.customer_url",equalTo(CustomerController.BASE_URL + "/1")));
+                .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
     }
 
     @Test
-    public void updateCustomerTest() throws Exception{
+    public void updateCustomerTest() throws Exception {
 
         //given
         CustomerDTO customerDTO = new CustomerDTO();
@@ -137,11 +132,11 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)))
                 .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)))
-                .andExpect(jsonPath("$.customer_url",equalTo(CustomerController.BASE_URL + "/1")));
+                .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
     }
 
     @Test
-    public void patchCustomerTest() throws Exception{
+    public void patchCustomerTest() throws Exception {
 
         //given
         CustomerDTO customerDTO = new CustomerDTO();
@@ -161,12 +156,12 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME)))
                 .andExpect(jsonPath("$.lastName", equalTo(LAST_NAME)))
-                .andExpect(jsonPath("$.customer_url",equalTo(CustomerController.BASE_URL + "/1")));
+                .andExpect(jsonPath("$.customer_url", equalTo(CustomerController.BASE_URL + "/1")));
 
     }
 
     @Test
-    public void deleteCustomerTest() throws Exception{
+    public void deleteCustomerTest() throws Exception {
 
         mockMvc.perform(delete(CustomerController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -176,7 +171,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void getNameNotFound() throws  Exception {
+    public void getNameNotFound() throws Exception {
 
         when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
 
