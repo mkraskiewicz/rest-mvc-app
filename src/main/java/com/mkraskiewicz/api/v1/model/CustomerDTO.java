@@ -7,7 +7,6 @@ import lombok.Data;
  * Created by Maciej on 04/07/2018
  */
 @Data
-
 public class CustomerDTO {
 
     private String firstName;

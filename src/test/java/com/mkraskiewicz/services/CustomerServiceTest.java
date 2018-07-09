@@ -15,12 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Maciej on 04/07/2018
@@ -129,7 +127,7 @@ public class CustomerServiceTest {
 
         Long id = Long.valueOf(1);
 
-        customerRepository.deleteById(id);
+        customerService.deleteCustomerById(id);
 
         verify(customerRepository, timeout(1)).deleteById(anyLong());
     }

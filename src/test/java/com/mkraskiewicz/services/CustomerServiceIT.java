@@ -6,6 +6,7 @@ import com.mkraskiewicz.bootstrap.Bootstrap;
 import com.mkraskiewicz.domain.Customer;
 import com.mkraskiewicz.repositories.CategoryRepository;
 import com.mkraskiewicz.repositories.CustomerRepository;
+import com.mkraskiewicz.repositories.VendorRepository;
 import com.mkraskiewicz.services.impl.CustomerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by Maciej on 05/07/2018
@@ -35,6 +34,8 @@ public class CustomerServiceIT {
     CategoryRepository categoryRepository;
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    VendorRepository vendorRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -42,7 +43,7 @@ public class CustomerServiceIT {
         System.out.println("Loading Customer Data");
         System.out.println(customerRepository.findAll().size());
 
-        Bootstrap bootstrap = new Bootstrap(categoryRepository,customerRepository);
+        Bootstrap bootstrap = new Bootstrap(categoryRepository,customerRepository, vendorRepository);
         bootstrap.run();
 
         customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);

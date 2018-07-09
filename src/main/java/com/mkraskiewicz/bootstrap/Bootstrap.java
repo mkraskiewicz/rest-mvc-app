@@ -2,8 +2,10 @@ package com.mkraskiewicz.bootstrap;
 
 import com.mkraskiewicz.domain.Category;
 import com.mkraskiewicz.domain.Customer;
+import com.mkraskiewicz.domain.Vendor;
 import com.mkraskiewicz.repositories.CategoryRepository;
 import com.mkraskiewicz.repositories.CustomerRepository;
+import com.mkraskiewicz.repositories.VendorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,10 +19,13 @@ public class Bootstrap implements CommandLineRunner {
 
     private CategoryRepository categoryRepository;
     private CustomerRepository customerRepository;
+    private VendorRepository vendorRepository;
 
-    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository,
+                     VendorRepository vendorRepository) {
         this.categoryRepository = categoryRepository;
         this.customerRepository = customerRepository;
+        this.vendorRepository = vendorRepository;
     }
 
     @Override
@@ -28,6 +33,7 @@ public class Bootstrap implements CommandLineRunner {
 
         loadCustomers();
         loadCategories();
+        loadVendors();
 
     }
 
@@ -74,5 +80,19 @@ public class Bootstrap implements CommandLineRunner {
         customerRepository.save(anotherRandom);
 
         log.info("Customer Data loaded = " + customerRepository.count());
+    }
+
+    private void loadVendors(){
+
+        Vendor bob = new Vendor();
+        bob.setName("Bob and Family");
+
+        Vendor fruits = new Vendor();
+        fruits.setName("Fruits Company");
+
+        vendorRepository.save(bob);
+        vendorRepository.save(fruits);
+
+        log.info("Vendors Data loaded = " + vendorRepository.count());
     }
 }
