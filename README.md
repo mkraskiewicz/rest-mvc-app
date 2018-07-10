@@ -15,4 +15,5 @@ Techology Stack (At the moment, as project is still under development):
 - Continuous Integration with CircleCI
 - Code Coverage with CodeCov
 - MapStruct
+- Swagger2
 
