@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Maciej on 04/07/2018
  */
-public class CustomerServiceTest {
+public class CustomerServiceImplTest {
 
 
 
@@ -122,6 +122,31 @@ public class CustomerServiceTest {
         assertEquals(CustomerController.BASE_URL +  "/1", returnedDTO.getCustomerUrl());
     }
 
+    @Test
+    public void patchCustomerTest(){
+
+        //given
+        Customer customer = new Customer();
+        customer.setFirstName(FIRST_NAME);
+        customer.setLastName(LAST_NAME);
+        customer.setId(Long.valueOf(1));
+
+        CustomerDTO givenDTO = new CustomerDTO();
+        givenDTO.setLastName(customer.getLastName());
+        givenDTO.setFirstName(customer.getFirstName());
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+        when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
+
+        //when
+
+        CustomerDTO savedDTO = customerService.patchCustomer(Long.valueOf(1), givenDTO);
+
+        //then
+
+        verify(customerRepository, times(1)).findById(anyLong());
+        assertEquals(savedDTO.getCustomerUrl(), savedDTO.getCustomerUrl());
+    }
     @Test
     public void deleteCustomerByIdTest() throws Exception {
 

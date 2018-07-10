@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CustomerServiceIT {
+public class CustomerServiceImplIT {
 
     static final  String UPDATED_VALUE = "Updated String";
 

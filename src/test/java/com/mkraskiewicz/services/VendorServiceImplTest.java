@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Maciej on 09/07/2018
  */
-public class VendorServiceTest {
+public class VendorServiceImplTest {
 
 
     public static final String NAME = "Maciej";
@@ -40,7 +40,7 @@ public class VendorServiceTest {
     }
 
     @Test
-    public void getAllVendors() {
+    public void getAllVendorsTest() {
 
         //given
         List<Vendor> vendorList = Arrays.asList(new Vendor(), new Vendor(), new Vendor() );
@@ -54,12 +54,12 @@ public class VendorServiceTest {
     }
 
     @Test
-    public void getVendorById() {
+    public void getVendorByIdTest() {
 
         //given
         Vendor vendor = new Vendor();
         vendor.setName(NAME);
-        when(vendorRepository.findById(anyLong())).thenReturn(Optional.ofNullable(vendor));
+        when(vendorRepository.findById(anyLong())).thenReturn(Optional.of(vendor));
 
         //when
         VendorDTO returnedVendorDTO = vendorService.getVendorById(anyLong());
@@ -69,7 +69,7 @@ public class VendorServiceTest {
     }
 
     @Test
-    public void createNewVendor() {
+    public void createNewVendorTest() {
 
         //given
         Vendor vendor = new Vendor();
@@ -91,7 +91,7 @@ public class VendorServiceTest {
     }
 
     @Test
-    public void saveVendorByDTO() {
+    public void saveVendorByDTOTest() {
 
         //given
         Vendor vendor = new Vendor();
@@ -112,8 +112,33 @@ public class VendorServiceTest {
 
     }
 
+
     @Test
-    public void deleteVendorById() {
+    public void patchVendorTest(){
+
+        //given
+        Vendor vendor = new Vendor();
+        vendor.setName(NAME);
+        vendor.setId(Long.valueOf(1));
+
+        VendorDTO vendorDTO = new VendorDTO();
+        vendorDTO.setName(vendor.getName());
+
+        when(vendorRepository.save(any(Vendor.class))).thenReturn(vendor);
+        when(vendorRepository.findById(anyLong())).thenReturn(Optional.of(vendor));
+
+        //when
+
+        VendorDTO savedDTO = vendorService.patchVendor(Long.valueOf(1), vendorDTO);
+
+        //then
+
+        verify(vendorRepository, times(1)).findById(anyLong());
+        assertEquals(VendorController.BASE_URL + "/1", savedDTO.getVendorUrl());
+    }
+
+    @Test
+    public void deleteVendorByIdTest() {
 
         Long id = Long.valueOf(1);
 
