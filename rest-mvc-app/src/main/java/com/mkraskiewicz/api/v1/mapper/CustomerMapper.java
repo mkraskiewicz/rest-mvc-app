@@ -3,7 +3,6 @@ package com.mkraskiewicz.api.v1.mapper;
 import com.mkraskiewicz.api.v1.model.CustomerDTO;
 import com.mkraskiewicz.domain.Customer;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**

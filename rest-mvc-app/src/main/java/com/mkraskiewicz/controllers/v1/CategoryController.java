@@ -4,8 +4,6 @@ import com.mkraskiewicz.api.v1.model.CategoryDTO;
 import com.mkraskiewicz.api.v1.model.CategoryListDTO;
 import com.mkraskiewicz.services.CategoryService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**

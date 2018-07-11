@@ -4,7 +4,7 @@ import com.mkraskiewicz.api.v1.model.CustomerDTO;
 import com.mkraskiewicz.domain.Customer;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Maciej on 04/07/2018
