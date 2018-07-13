@@ -1,9 +1,9 @@
 package com.mkraskiewicz.services;
 
 import com.mkraskiewicz.api.v1.mapper.CustomerMapper;
-import com.mkraskiewicz.api.v1.model.CustomerDTO;
 import com.mkraskiewicz.bootstrap.Bootstrap;
 import com.mkraskiewicz.domain.Customer;
+import com.mkraskiewicz.model.CustomerDTO;
 import com.mkraskiewicz.repositories.CategoryRepository;
 import com.mkraskiewicz.repositories.CustomerRepository;
 import com.mkraskiewicz.repositories.VendorRepository;

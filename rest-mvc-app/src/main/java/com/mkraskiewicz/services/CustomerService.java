@@ -1,6 +1,6 @@
 package com.mkraskiewicz.services;
 
-import com.mkraskiewicz.api.v1.model.CustomerDTO;
+import com.mkraskiewicz.model.CustomerDTO;
 
 import java.util.List;
 

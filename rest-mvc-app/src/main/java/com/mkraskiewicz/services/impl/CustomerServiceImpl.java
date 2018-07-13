@@ -1,10 +1,10 @@
 package com.mkraskiewicz.services.impl;
 
 import com.mkraskiewicz.api.v1.mapper.CustomerMapper;
-import com.mkraskiewicz.api.v1.model.CustomerDTO;
 import com.mkraskiewicz.controllers.v1.CustomerController;
 import com.mkraskiewicz.domain.Customer;
 import com.mkraskiewicz.exceptions.ResourceNotFoundException;
+import com.mkraskiewicz.model.CustomerDTO;
 import com.mkraskiewicz.repositories.CustomerRepository;
 import com.mkraskiewicz.services.CustomerService;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.mkraskiewicz.api.v1.mapper;
 
-import com.mkraskiewicz.api.v1.model.CustomerDTO;
 import com.mkraskiewicz.domain.Customer;
+import com.mkraskiewicz.model.CustomerDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

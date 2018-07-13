@@ -1,7 +1,7 @@
 package com.mkraskiewicz.controllers.v1;
 
-import com.mkraskiewicz.api.v1.model.CustomerDTO;
-import com.mkraskiewicz.api.v1.model.CustomerListDTO;
+import com.mkraskiewicz.model.CustomerDTO;
+import com.mkraskiewicz.model.CustomerListDTO;
 import com.mkraskiewicz.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 
 /**
  * Created by Maciej on 04/07/2018
@@ -30,7 +29,9 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers(){
 
-        return new ResponseEntity<CustomerListDTO>(new CustomerListDTO(customerService.getAllCustomers()),
+        CustomerListDTO customerListDTO = new CustomerListDTO();
+        customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
+        return new ResponseEntity<CustomerListDTO>(customerListDTO,
                 HttpStatus.OK);
     }
 

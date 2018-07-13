@@ -5,7 +5,7 @@ Code Coverage: [![codecov](https://codecov.io/gh/mkraskiewicz/rest-mvc-app/branc
 
 REST-MVC Multi module Application I am working on during 'Spring Framework 5: Beginner to Guru' Course.
 
-Techology Stack (At the moment, as project is still under development): 
+Techology Stack: 
 - Java 8
 - Spring Boot 
   - Spring MVC
